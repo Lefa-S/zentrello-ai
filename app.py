@@ -4,14 +4,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import os
 
-
-port = int(os.environ.get("PORT", 8000))
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=port)
-
-    
 app = FastAPI()
 
 # Load tokenizer and model once on startup
@@ -45,3 +37,8 @@ async def generate_reply_endpoint(data: InputText):
     summary = summary_text.split("Summary:")[-1].strip()
 
     return {"summary": summary if summary else "No reply generated."}
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    import uvicorn
+    uvicorn.run("app:app", host="0.0.0.0", port=port)
