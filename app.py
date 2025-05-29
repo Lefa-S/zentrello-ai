@@ -13,7 +13,6 @@ model = AutoModelForCausalLM.from_pretrained(
     "microsoft/phi-3-mini-4k-instruct",
     trust_remote_code=True,
     device_map="auto",
-    load_in_4bit=True
 )
 
 class InputText(BaseModel):
@@ -39,6 +38,6 @@ async def generate_reply_endpoint(data: InputText):
     return {"summary": summary if summary else "No reply generated."}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 10000))
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=port)
